@@ -1,0 +1,41 @@
+name: unittest
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+  workflow_dispatch:
+
+jobs:
+  bazel:
+    runs-on: ubuntu-latest
+
+    container:
+      image: curoky/compile:ubuntu21.10
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: mount bazel cache
+        uses: actions/cache@v2
+        with:
+          path: '~/.cache/bazel'
+          key: bazel-cache-${{ github.sha	}}
+          restore-keys: |
+            bazel-cache-
+
+      - name: bazel clean
+        if: ${{ github.event_name == 'schedule' }}
+        run: rm -rf ~/.cache/bazel
+
+      - name: bazel sync
+        run: bazel sync
+
+      - name: bazel build
+        run: bazel build //...
+
+      - name: bazel test
+        run: bazel test //...
+
+      - uses: curoky/actions/tmate@master
+        if: ${{ failure() }}
