@@ -1,0 +1,23 @@
+{
+  "python.linting.ignorePatterns": ["external/**", "bazel-*/**"],
+  "python.analysis.ignore": ["bazel-*/**", "external/**"],
+  "files.associations": {
+    "*.BUILD": "starlark",
+    "*.blade": "starlark",
+    "*.cc.j2": "jinja-cpp",
+    "*.h.j2": "jinja-cpp",
+    "*.imp": "llvm",
+    "*.inc": "cpp",
+    "*.mustache": "cpp",
+    "*.nova": "thrift",
+    "*.orc": "thrift",
+    "*.tcc": "cpp",
+    "*.tcc.j2": "jinja-cpp",
+    "BUILD": "starlark",
+    "Brewfile.*": "ruby",
+    "vimrc": "viml",
+    "*.ipp": "cpp",
+    "numbers": "cpp",
+    "string": "cpp"
+  }
+}
