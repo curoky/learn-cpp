@@ -1,1 +1,31 @@
+# vscode
+.vscode
+
+# C++
+## cmake
+builddir
+desktop/Qt/build-*
+
+## vcpkg
+vcpkg_installed
+
+## bazel
+/bazel-*
+builddir
+compile_commands.json
+!build-system/cmake/hello/compile_commands.json
+
+## thrift
+**/gen-cpp/*
+**/gen-go/*
+**/gen-java/*
+
+# python
+*.pyc
+
+## poetry
+dist
+
+# bazel
 bazel-*
+compile_commands.json
