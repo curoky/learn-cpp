@@ -27,7 +27,7 @@ cc_test(
     srcs = ["type.cc"],
     deps = [
         ":mock_flat",
-        "//dumbo/utilities:catch2_main",
-        "@com_github_catchorg_catch2//:catch2",
+        "@com_github_curoky_wolic//:catch2_main",
+        "@com_github_google_flatbuffers//:flatbuffers",
     ],
 )
