@@ -24,6 +24,7 @@ flatbuffer_cc_library(
 
 cc_test(
     name = "type_test",
+    testonly = False,
     srcs = ["type.cc"],
     deps = [
         ":mock_flat",
