@@ -17,13 +17,15 @@
  * limitations under the License.
  */
 
-#include <catch2/catch.hpp>  // for AssertionHandler, operator""_catch_sr, SourceLineInfo, StringRef, REQUIRE, REQUIRE_FALSE, TEST_CASE
-#include <nlohmann/json.hpp>  // for basic_json, operator==, basic_json<>::object_t, operator<<, json
+#include <catch2/catch_test_macros.hpp>
+#include <nlohmann/json.hpp>
 
-#include <initializer_list>  // for initializer_list
-#include <map>               // for map
-#include <stdexcept>         // for out_of_range
-#include <vector>            // for vector, allocator
+#include <initializer_list>
+#include <map>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 #include "json_data.h"
 
@@ -71,16 +73,34 @@ TEST_CASE("[Nlohmann-json]: parse json") {
   REQUIRE(key_list_mix.is_array());
   REQUIRE(key_list_mix.at(0) == "1");
   REQUIRE(key_list_mix.at(1) == 2);
+  {
+    auto& key_map_eq = params["key_map_eq"];
+    REQUIRE(key_map_eq.is_object());
+    REQUIRE(key_map_eq.count("kk1") == 1);
+    REQUIRE(key_map_eq["kk2"] == "2");
 
-  auto& key_map_eq = params["key_map_eq"];
-  REQUIRE(key_map_eq.is_object());
-  REQUIRE(key_map_eq.count("kk1") == 1);
-  REQUIRE(key_map_eq["kk2"] == "2");
+    std::unordered_map<std::string, std::string> string_map =
+        key_map_eq.get<std::unordered_map<std::string, std::string>>();
+    REQUIRE(string_map.size() == 2);
+  }
+  {
+    auto& key_map_mix = params["key_map_mix"];
+    REQUIRE(key_map_mix.is_object());
+    REQUIRE(key_map_mix.at("kk1") == 1);
+    REQUIRE(key_map_mix.at("kk3").at(2) == 3);
 
-  auto& key_map_mix = params["key_map_mix"];
-  REQUIRE(key_map_mix.is_object());
-  REQUIRE(key_map_mix.at("kk1") == 1);
-  REQUIRE(key_map_mix.at("kk3").at(2) == 3);
+    bool have_except = false;
+    try {
+      std::unordered_map<std::string, std::string> string_map =
+          key_map_mix.get<std::unordered_map<std::string, std::string>>();
+      REQUIRE(string_map.size() == 3);
+    } catch (json::type_error& e) {
+      have_except = true;
+      REQUIRE(e.what() ==
+              std::string("[json.exception.type_error.302] type must be string, but is number"));
+    }
+    REQUIRE(have_except == true);
+  }
 }
 
 // custom struct
