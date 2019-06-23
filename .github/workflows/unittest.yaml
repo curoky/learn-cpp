@@ -1,6 +1,18 @@
-name: unittest
+name: Unittest
+
 on:
   push:
+    paths:
+      - '.github/workflows/unittest-cpp.yaml'
+      - 'lang/cpp/**'
+      - '**.h'
+      - '**.cc'
+      - 'WORKSPACE'
+      - '**/BUILD'
+      - '**/CMakeLists.txt'
+      - '**.cmake'
+  schedule:
+    - cron: '0 0 * * 6'
   workflow_dispatch:
 
 jobs:
@@ -12,30 +24,29 @@ jobs:
         os: [ubuntu21.04, ubuntu21.10]
 
     container:
-      image: curoky/homebrew:ubunut20.10
-
-    env:
-      HOMEBREW_NO_ANALYTICS: 1
-      HOMEBREW_NO_AUTO_UPDATE: 1
-      PATH: /home/linuxbrew/.linuxbrew/bin:/usr/local/bin:/usr/bin:/bin
+      image: curoky/compile:${{ matrix.os }}
+      volumes:
+        - /opt:/opt
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: setup bazel
-        run: |
-          brew tap curoky/tap
-          # git -C $(brew --prefix)/Homebrew/Library/Taps/curoky/homebrew-tap checkout dev
-          brew install bazel@3 tbb python@3.9 gperf qt@5.13.2 libiberty
-          sudo ln -s /home/linuxbrew/.linuxbrew/opt/python@3.9/bin/python3 /usr/bin/python
-
-      - name: mount bazel cache
-        uses: actions/cache@v2
+      - uses: curoky/cleanup-disk-action@master
         with:
-          path: '~/.cache/bazel'
-          key: bazel-cache-${{ github.sha	}}
-          restore-keys: |
-            bazel-cache-
+          retain: 'python,node,linuxbrew'
+
+      # - name: setup deps
+      #   run: |
+      #     brew install qt@5.13.2 tbb libiberty jemalloc
+      #     brew reinstall qt@5.13.2
+
+      # TODO(curoky): reduce cache size
+      # - name: mount bazel cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: '~/.cache/bazel'
+      #     key: bazel-cache-${{ github.sha	}}
+      #     restore-keys: |
+      #       bazel-cache-
 
       # - name: bazel clean
       #   if: ${{ github.event_name == 'schedule' }}
