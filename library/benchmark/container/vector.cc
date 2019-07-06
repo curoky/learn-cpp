@@ -15,12 +15,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
-#include <benchmark/benchmark.h>  // for State, Benchmark, BENCHMARK_TEMPLATE, DoNotOptimize, BENCHMARK_MAIN
-#include <folly/FBVector.h>      // for fbvector
-#include <folly/small_vector.h>  // for small_vector
+#include <benchmark/benchmark.h>
+#include <folly/FBVector.h>
+#include <folly/small_vector.h>
 
 #include <vector>
 
