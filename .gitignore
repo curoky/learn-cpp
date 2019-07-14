@@ -1,15 +1,3 @@
-# vscode
-.vscode
-
-# C++
-## cmake
-builddir
-desktop/Qt/build-*
-
-## vcpkg
-vcpkg_installed
-
-## bazel
 /bazel-*
 builddir
 compile_commands.json
