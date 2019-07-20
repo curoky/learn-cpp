@@ -17,12 +17,11 @@
  * limitations under the License.
  */
 
-#include <catch2/catch.hpp>  // for AssertionHandler, operator""_catch_sr, SourceLineInfo, StringRef, REQUIRE, TEST_CASE
-#include <taskflow/taskflow.hpp>  // for Task, Taskflow, Executor
+#include <catch2/catch_test_macros.hpp>
+#include <taskflow/taskflow.hpp>
 
-#include <future>    // for future
-#include <iostream>  // for cout
-#include <memory>    // for allocator
+#include <iostream>
+#include <memory>
 
 TEST_CASE("BaseTest", "[Taskflow]") {
   tf::Executor executor;

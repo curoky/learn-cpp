@@ -15,18 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
+"""dumbo specific copts.
+"""
 
-cc_binary(
-    name = "main",
-    srcs = [
-        "lib.cc",
-        "lib.h",
-        "main.cc",
-    ],
-    copts = TEST_CPP_COPTS,
-    linkopts = TEST_LINKOPTS,
-    # hdrs = ["lib.h"],
-    deps = ["@com_github_catchorg_catch2//:catch2"],
-)
+DUMBO_DEFAULT_COPTS = [
+    "-g",
+    "-fno-omit-frame-pointer",
+    # "-fsanitize=address",
+    "-std=c++2a",
+]
+
+DEFAULT_C_COPTS = BASE_C_COPTS
+DEFAULT_CPP_COPTS = BASE_CPP_COPTS
+TEST_CPP_COPTS = _TEST_CPP_COPTS
+
+DEFAULT_LINKOPTS = _DEFAULT_LINKOPTS
+TEST_LINKOPTS = _TEST_LINKOPTS

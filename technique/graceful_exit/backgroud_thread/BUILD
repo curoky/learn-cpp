@@ -16,10 +16,13 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_binary(
     name = "solution",
     srcs = ["solution.cc"],
+    copts = TEST_CPP_COPTS,
+    linkopts = TEST_LINKOPTS,
     deps = [
         "@com_github_google_glog//:glog",
     ],

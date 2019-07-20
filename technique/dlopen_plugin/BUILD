@@ -16,15 +16,15 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_binary(
     name = "action_service",
     srcs = [
         "action_service.cc",
     ],
-    linkopts = [
-        "-ldl",
-    ],
+    copts = TEST_CPP_COPTS,
+    linkopts = TEST_LINKOPTS,
     deps = [
         "//technique/dlopen_plugin/plugin:libaction",
     ],

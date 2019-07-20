@@ -16,9 +16,12 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_binary(
     name = "example",
-    srcs=["catch2_bm.cc"],
-    deps = ["@com_github_catchorg_catch2//:catch2"],
+    srcs = ["catch2_bm.cc"],
+    copts = TEST_CPP_COPTS,
+    linkopts = TEST_LINKOPTS,
+    deps = ["@com_github_catchorg_catch2//:catch2_main"],
 )

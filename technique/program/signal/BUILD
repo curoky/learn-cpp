@@ -16,20 +16,13 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_binary(
     name = "signal_kill",
     srcs = glob(["*.cc"]),
-    copts = [
-        "-g",
-        "-std=c++17",
-        "-fno-omit-frame-pointer",
-        "-fsanitize=address",
-    ],
-    linkopts = [
-        "-lpthread",
-        "-fsanitize=address",
-    ],
+    copts = TEST_CPP_COPTS,
+    linkopts = TEST_LINKOPTS,
     deps = [
         "@com_github_catchorg_catch2//:catch2_main",
     ],
