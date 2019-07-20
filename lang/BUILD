@@ -16,13 +16,14 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_test")
+load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_test(
-    name = "standard_test",
+    name = "example",
     testonly = False,
     srcs = glob(["**/*.cc"]),
-    copts = ["-std=c++2a"],
-    linkopts = ["-latomic"],
+    copts = TEST_CPP_COPTS,
+    linkopts = TEST_LINKOPTS,
     deps = [
         "//utilities",
         "@boost//:container_hash",

@@ -23,7 +23,6 @@ common_copts = [
     "-fno-omit-frame-pointer",
 ]
 
-
 cc_binary(
     name = "case0",
     srcs = [
