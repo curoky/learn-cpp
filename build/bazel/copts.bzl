@@ -18,12 +18,7 @@
 """dumbo specific copts.
 """
 
-DUMBO_DEFAULT_COPTS = [
-    "-g",
-    "-fno-omit-frame-pointer",
-    # "-fsanitize=address",
-    "-std=c++2a",
-]
+load("@com_curoky_tame//bazel:copts.bzl", "BASE_CPP_COPTS", "BASE_C_COPTS", _DEFAULT_LINKOPTS = "DEFAULT_LINKOPTS", _TEST_CPP_COPTS = "TEST_CPP_COPTS", _TEST_LINKOPTS = "TEST_LINKOPTS")
 
 DEFAULT_C_COPTS = BASE_C_COPTS
 DEFAULT_CPP_COPTS = BASE_CPP_COPTS
