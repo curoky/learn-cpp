@@ -22,8 +22,17 @@
 
 #include <type_traits>
 
-class Foo1;
-class Foo2;
+class Foo1 {
+ public:
+  using type_int = int;
+  int var_int;
+  int var_func_void_int();
+  void var_func_void_void();
+
+ private:
+  using private_type_int = int;
+  int private_var_int;
+};
 
 FATAL_HAS_TYPE(has_type_int, type_int);
 
