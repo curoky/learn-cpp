@@ -1,0 +1,17 @@
+{
+  "class": null,
+  "member": [
+    {
+      "base": "B::NN",
+      "filepath": "/home/curoky/repos/cpp/dumbo/dumbo/magic/clang-tools/main.cc:39:33",
+      "name": "a",
+      "type": "double"
+    },
+    {
+      "base": "class xxx::NN",
+      "filepath": "/home/curoky/repos/cpp/dumbo/dumbo/magic/clang-tools/main.cc:40:38",
+      "name": "a",
+      "type": "double"
+    }
+  ]
+}
