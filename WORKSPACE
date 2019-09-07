@@ -1,4 +1,7 @@
-# Copyright 2021 curoky(cccuroky@gmail.com).
+# Copyright (c) 2018-2022 curoky(cccuroky@gmail.com).
+#
+# This file is part of learn-cpp.
+# See https://github.com/curoky/learn-cpp for further info.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,27 +15,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-workspace(name = "com_github_curoky_carrier")
+workspace(name = "com_github_curoky_learn_cpp")
 
 # load("@//:builddir/conan/dependencies.bzl", "load_conan_dependencies")
 # load_conan_dependencies()
 
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
+# '''
 git_repository(
     name = "com_curoky_tame",
     branch = "master",
     remote = "https://github.com/curoky/tame",
 )
 
-# local_repository(
-#     name = "com_curoky_rules_pkg",
-#     path = "/home/curoky/repos/cpp/rules_pkg",
-# )
+'''
+local_repository(
+    name = "com_curoky_tame",
+    path = "/home/cicada/repos/tame",
+)
+#'''
 
 load("//build/bazel:recipes.bzl", "pkg_rules_dependencies")
 
-pkg_rules_dependencies(["qt"])
+pkg_rules_dependencies()
 
 load("//build/bazel:register_toolchains.bzl", "pkg_register_toolchains")
 
