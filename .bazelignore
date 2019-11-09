@@ -1,0 +1,6 @@
+external
+go
+builddir
+vcpkg_installed
+build-system
+app
