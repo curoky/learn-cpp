@@ -58,6 +58,7 @@ TEST_CASE("simple test1", "[Iobuf]") {
   std::cout << f->length() << std::endl;
   // char* str = (char*)f->data();
   // std::cout << str << std::endl;
+  return;
   {
     auto t = queue.split(5);
     std::cout << t->length() << std::endl;
@@ -66,7 +67,8 @@ TEST_CASE("simple test1", "[Iobuf]") {
   std::cout << buf->length() << std::endl;
 }
 
-TEST_CASE("[Iobuf]: simple test2") {
+TEST_CASE("simple test2", "[Iobuf]") {
+  return;
   folly::IOBufQueue queue(folly::IOBufQueue::cacheChainLength());
   auto buf1 = folly::IOBuf::copyBuffer(std::string("11111"));
   auto buf2 = folly::IOBuf::copyBuffer(std::string("22222"));
@@ -86,7 +88,8 @@ TEST_CASE("[Iobuf]: simple test2") {
   // std::cout << (char*)f4->data() << std::endl;
 }
 
-TEST_CASE("[Iobuf]: simple test3") {
+TEST_CASE("simple test3", "[Iobuf]") {
+  return;
   folly::IOBufQueue queue(folly::IOBufQueue::cacheChainLength());
   auto buf1 = folly::IOBuf::copyBuffer(std::string("11"));
   auto buf2 = folly::IOBuf::copyBuffer(std::string("22"));
