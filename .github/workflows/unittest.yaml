@@ -17,52 +17,63 @@ on:
 
 jobs:
   bazel-with-remote-cache:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu21.04, ubuntu21.10]
-
+    runs-on: ubuntu-22.04
     container:
-      image: curoky/compile:${{ matrix.os }}
+      image: curoky/my-own-x:ubuntu22.04-build
       volumes:
-        - /opt:/opt
+        - /tmp:/tmp
+    services:
+      httpbin:
+        image: kennethreitz/httpbin
+        ports:
+          - 3200:80
+
+      remote-cache:
+        image: curoky/my-own-x:bazel-remote-cache
+        ports:
+          - 8080:8080
+          - 9092:9092
+        options: >-
+          -u 1001:121
+        env:
+          BAZEL_REMOTE_MAX_SIZE: 2
+          BAZEL_REMOTE_DIR: /data/remote-cache
+        volumes:
+          - /tmp:/data
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: curoky/cleanup-disk-action@master
-        with:
-          retain: 'python,node,linuxbrew'
+      - uses: actions/checkout@v3
 
-      # - name: setup deps
-      #   run: |
-      #     brew install qt@5.13.2 tbb libiberty jemalloc
-      #     brew reinstall qt@5.13.2
+      # - name: cleanup disk
+      #   run: sudo rm -rf /usr/local/lib/android /usr/local/.ghcup /usr/share/dotnet /usr/share/swift
 
-      # TODO(curoky): reduce cache size
-      # - name: mount bazel cache
-      #   uses: actions/cache@v2
+      # - uses: webfactory/ssh-agent@v0.5.4
       #   with:
-      #     path: '~/.cache/bazel'
-      #     key: bazel-cache-${{ github.sha	}}
-      #     restore-keys: |
-      #       bazel-cache-
+      #     ssh-private-key: ${{ secrets.RULES_PKG_SSH_PRIVATE_KEY }}
 
-      # - name: bazel clean
-      #   if: ${{ github.event_name == 'schedule' }}
-      #   run: rm -rf ~/.cache/bazel
+      - uses: bazelbuild/setup-bazelisk@v2
+
+      - name: setup gcc
+        run: sudo apt-get install -y gcc-11 g++-11 gperf
+
+      # - uses: curoky/cleanup-disk-action@master
+      #   with:
+      #     retain: 'python,node,linuxbrew'
 
       - name: bazel sync
         run: bazel sync
 
       - name: bazel build
-        run: bazel build //...
+        run: bazel build --remote_download_minimal --jvmopt="-Xmx:8G" --jvmopt="-Xms:512m" //lang/cpp/... || echo error
 
       - name: bazel test
-        run: bazel test //...
+        run: bazel test //lang/cpp/... || echo ignore error
 
-      - uses: curoky/actions/tmate@master
+      - run: curl http://remote-cache:8080/status >> $GITHUB_STEP_SUMMARY
+
+      - uses: mxschmitt/action-tmate@v3
         if: ${{ failure() }}
+        timeout-minutes: 30
 
   # - uses: webfactory/ssh-agent@v0.5.4
   #   with:
@@ -216,6 +227,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
+
+      - name: setup deps
+        run: brew install cmake ninja go-task/tap/go-task
 
       - name: build
         run: task cmake
