@@ -2,7 +2,7 @@ default_stages: [commit]
 exclude: ^(config/cmake/cpm/deps-generated.cmake|config/bazel/recipes.bzl)$
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: 'v4.0.1'
+    rev: 'v4.2.0'
     hooks:
       - id: check-added-large-files
         args: ['--maxkb', '5000']
@@ -12,40 +12,23 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 'v2.20.0'
+    rev: 'v2.25.0'
     hooks:
       - id: commitizen
         stages: [commit-msg]
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: 'v2.4.1'
+    rev: 'v2.6.2'
     hooks:
       - id: prettier
   - repo: https://github.com/pre-commit/mirrors-yapf
-    rev: 'v0.31.0'
+    rev: 'v0.32.0'
     hooks:
       - id: yapf
         additional_dependencies: [toml]
   - repo: https://github.com/asottile/pyupgrade
-    rev: 'v2.29.0'
+    rev: 'v2.32.1'
     hooks:
       - id: pyupgrade
-  - repo: https://github.com/yoheimuta/protolint
-    rev: 'v0.38.1'
-    hooks:
-      - id: protolint
-  # - repo: https://github.com/markdownlint/markdownlint
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: 'v0.29.0'
-    hooks:
-      - id: markdownlint
-  - repo: https://github.com/rubocop/rubocop
-    rev: 'v1.22.3'
-    hooks:
-      - id: rubocop
-  - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: 'v0.8.0.1'
-    hooks:
-      - id: shellcheck
   - repo: https://github.com/cpplint/cpplint
     rev: '1.6.0'
     hooks:
@@ -55,96 +38,21 @@ repos:
     rev: 'v0.6.13'
     hooks:
       - id: cmake-format
-      - id: cmake-lint
-  - repo: https://github.com/PyCQA/pylint
-    rev: 'v2.11.1'
-    hooks:
-      - id: pylint
   - repo: https://github.com/PyCQA/isort
     rev: '5.10.1'
     hooks:
       - id: isort
-        args: ['--settings-file=config/codestyle/.isort.cfg']
-  - repo: https://github.com/golangci/golangci-lint
-    rev: 'v1.46.1'
-    hooks:
-      - id: golangci-lint
-  - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.3.1
-    hooks:
-      - id: nbqa-isort
-        args: ['--settings-file=config/codestyle/.isort.cfg']
-      - id: nbqa-yapf
-        additional_dependencies: [toml, yapf]
-      - id: nbqa-pyupgrade
-  # - repo: https://github.com/adrienverge/yamllint
-  #   rev: 'v1.26.3'
-  #   hooks:
-  #     - id: yamllint
-  - repo: https://github.com/whtsky/pre-commit-beancount-format
-    rev: '2.3.4'
-    hooks:
-      - id: beancount-format
-        files: \.bean$
   - repo: https://github.com/pre-commit/mirrors-clang-format
     rev: 'v14.0.3'
     hooks:
       - id: clang-format
-  - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: '2.1.5'
+        'types_or': [c++, c, c#, cuda, java, objective-c, proto]
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: 'v3.4.3-1'
     hooks:
       - id: shfmt
-        args: ['-i', '2', '-s', '-l', '-ci']
-  # - repo: https://github.com/pocc/pre-commit-hooks
-  #   rev: v1.3.4
-  #   hooks:
-  #     - id: cppcheck
+        args: ['-w', '-i', '2', '-s', '-l', '-ci']
   - repo: https://github.com/keith/pre-commit-buildifier
     rev: '5.0.1'
     hooks:
       - id: buildifier
-      # - id: buildifier-lint
-  # - repo: https://github.com/nvuillam/npm-groovy-lint
-  #   rev: 'v9.5.0'
-  #   hooks:
-  #     - id: format-npm-groovy-lint
-  #     - id: fix-npm-groovy-lint
-  - repo: https://github.com/sqlfluff/sqlfluff
-    rev: '0.13.2'
-    hooks:
-      - id: sqlfluff-fix
-      - id: sqlfluff-lint
-  - repo: local
-    hooks:
-      # - id: skywalking
-      #   name: skywalking
-      #   types: [java]
-      #   language: system
-      #   entry: license-eye -c .licenserc.yaml header fix
-      - id: jupyter-nb-clear-output
-        name: jupyter-nb-clear-output
-        files: \.ipynb$
-        stages: [commit]
-        language: system
-        entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace
-      # - id: google-java-format
-      #   name: google-java-format
-      #   files: \.java$
-      #   stages: [commit]
-      #   language: system
-      #   entry: google-java-format -replace --skip-javadoc-formatting
-
-  - repo: https://github.com/johann-petrak/licenseheaders
-    rev: 'v0.8.8'
-    hooks:
-      - id: licenseheaders
-        types_or:
-          [c++, c, java, python, rust, cmake, bazel, go, ruby, rust, proto]
-        args:
-          - '--tmpl=config/codestyle/apache-2.tmpl'
-          - '--owner=curoky(cccuroky@gmail.com)'
-          - '--settings=config/codestyle/license-settings.json'
-          - '--projname=my-own-x'
-          - '--projurl=https://github.com/curoky/my-own-x'
-          - '--years=2018-2022'
-          - '--files'
