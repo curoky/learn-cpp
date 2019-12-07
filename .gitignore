@@ -22,3 +22,4 @@ distributed/rpc/thrift/tools/proxy-buffered-to-framed
 
 # clang
 clang-analysis
+compile_commands.json
