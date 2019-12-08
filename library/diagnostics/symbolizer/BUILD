@@ -58,3 +58,13 @@ cc_binary(
         "@com_github_facebook_folly//:folly",
     ],
 )
+
+cc_binary(
+    name = "folly_backtrace",
+    srcs = ["folly_backtrace.cc"],
+    copts = TEST_CPP_COPTS,
+    linkopts = TEST_LINKOPTS,
+    deps = [
+        "@com_github_facebook_folly//:folly",
+    ],
+)
