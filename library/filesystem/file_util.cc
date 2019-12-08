@@ -28,7 +28,7 @@ TEST_CASE("read file", "[FileUtil]") {
   folly::fbstring content;
   bool status = folly::readFile("/proc/sys/kernel/ostype", content);
   REQUIRE(status == true);
-  REQUIRE_THAT(content.toStdString(), Catch::StartsWith("Linux"));
+  REQUIRE_THAT(content.toStdString(), Catch::Matchers::StartsWith("Linux"));
 
   // file not found
   status = folly::readFile("/proc/sys/kernel/ostype.2333", content);

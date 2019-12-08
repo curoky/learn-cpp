@@ -43,7 +43,7 @@ TEST_CASE("simple test", "[PredefinedMacros]") {
   // REQUIRE(__STDC_MB_MIGHT_NEQ_WC__ == "");
   // REQUIRE(__STDCPP_STRICT_POINTER_SAFETY__ == "");
   // REQUIRE(__STDCPP_THREADS__ == "");
-  REQUIRE(__FUNCTION__ == "____C_A_T_C_H____T_E_S_T____0"s);
-  REQUIRE(__PRETTY_FUNCTION__ == "void ____C_A_T_C_H____T_E_S_T____0()"s);
-  REQUIRE(__func__ == "____C_A_T_C_H____T_E_S_T____0"s);
+  REQUIRE(__FUNCTION__ == "CATCH2_INTERNAL_TEST_0"s);
+  REQUIRE(__PRETTY_FUNCTION__ == "void CATCH2_INTERNAL_TEST_0()"s);
+  REQUIRE(__func__ == "CATCH2_INTERNAL_TEST_0"s);
 }

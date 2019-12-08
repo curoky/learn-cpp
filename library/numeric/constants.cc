@@ -22,18 +22,18 @@
 
 #include <numbers>
 
-TEST_CASE("[Constants]: basic usage") {
-  REQUIRE(std::numbers::e == Approx(2.7182818285).epsilon(0.00001));
-  REQUIRE(std::numbers::log2e == Approx(1.4426950409).epsilon(0.00001));
-  REQUIRE(std::numbers::log10e == Approx(0.4342944819).epsilon(0.00001));
-  REQUIRE(std::numbers::pi == Approx(3.1415926536).epsilon(0.00001));
-  REQUIRE(std::numbers::inv_pi == Approx(0.3183098862).epsilon(0.00001));
-  REQUIRE(std::numbers::inv_sqrtpi == Approx(0.5641895835).epsilon(0.00001));
-  REQUIRE(std::numbers::ln2 == Approx(0.6931471806).epsilon(0.00001));
-  REQUIRE(std::numbers::ln10 == Approx(2.302585093).epsilon(0.00001));
-  REQUIRE(std::numbers::sqrt2 == Approx(1.4142135624).epsilon(0.00001));
-  REQUIRE(std::numbers::sqrt3 == Approx(1.7320508076).epsilon(0.00001));
-  REQUIRE(std::numbers::inv_sqrt3 == Approx(0.5773502692).epsilon(0.00001));
-  REQUIRE(std::numbers::egamma == Approx(0.5772156649).epsilon(0.00001));
-  REQUIRE(std::numbers::phi == Approx(1.6180339887).epsilon(0.00001));
+TEST_CASE("basic usage", "[Constants]") {
+  REQUIRE(std::numbers::e == Catch::Approx(2.7182818285).epsilon(0.00001));
+  REQUIRE(std::numbers::log2e == Catch::Approx(1.4426950409).epsilon(0.00001));
+  REQUIRE(std::numbers::log10e == Catch::Approx(0.4342944819).epsilon(0.00001));
+  REQUIRE(std::numbers::pi == Catch::Approx(3.1415926536).epsilon(0.00001));
+  REQUIRE(std::numbers::inv_pi == Catch::Approx(0.3183098862).epsilon(0.00001));
+  REQUIRE(std::numbers::inv_sqrtpi == Catch::Approx(0.5641895835).epsilon(0.00001));
+  REQUIRE(std::numbers::ln2 == Catch::Approx(0.6931471806).epsilon(0.00001));
+  REQUIRE(std::numbers::ln10 == Catch::Approx(2.302585093).epsilon(0.00001));
+  REQUIRE(std::numbers::sqrt2 == Catch::Approx(1.4142135624).epsilon(0.00001));
+  REQUIRE(std::numbers::sqrt3 == Catch::Approx(1.7320508076).epsilon(0.00001));
+  REQUIRE(std::numbers::inv_sqrt3 == Catch::Approx(0.5773502692).epsilon(0.00001));
+  REQUIRE(std::numbers::egamma == Catch::Approx(0.5772156649).epsilon(0.00001));
+  REQUIRE(std::numbers::phi == Catch::Approx(1.6180339887).epsilon(0.00001));
 }
