@@ -24,15 +24,15 @@
 #include <string>
 #include <vector>
 
-TEST_CASE("[Catch2]: floating point comparisons") {
-  REQUIRE(2 == Approx(2.000000000001));
+TEST_CASE("floating point comparisons", "[Catch2]") {
+  REQUIRE(2 == Catch::Approx(2.000000000001));
 
   using namespace Catch::literals;  // NOLINT
   REQUIRE(2 == 2.000000000001_a);
 
   SECTION("epsilon") {
     // 允许相差 1%
-    Approx target = Approx(100).epsilon(0.01);
+    Catch::Approx target = Catch::Approx(100).epsilon(0.01);
     REQUIRE(89.9 != target);
     REQUIRE(99.0 == target);
     REQUIRE(101.0 == target);
@@ -41,7 +41,7 @@ TEST_CASE("[Catch2]: floating point comparisons") {
 
   SECTION("margin") {
     // 允许相差大小 5
-    Approx target = Approx(100).margin(5);
+    Catch::Approx target = Catch::Approx(100).margin(5);
     REQUIRE(94.0 != target);
     REQUIRE(95.0 == target);
     REQUIRE(105.0 == target);
@@ -56,16 +56,18 @@ TEST_CASE("[Catch2]: floating point comparisons") {
 TEST_CASE("string matcher", "[Catch2]") {
   // using Catch::Matchers::EndsWith;
   // or using Catch::EndsWith
-  REQUIRE_THAT("hello world", Catch::StartsWith("hello"));
-  REQUIRE_THAT("hello world", Catch::EndsWith("world"));
-  REQUIRE_THAT("hello world", Catch::Contains("hello"));
-  REQUIRE_THAT("hello world", Catch::Equals("hello world"));
-  REQUIRE_THAT("hello world", Catch::Matches(R"~(hello \w*)~"));
+  REQUIRE_THAT("hello world", Catch::Matchers::StartsWith("hello"));
+  REQUIRE_THAT("hello world", Catch::Matchers::EndsWith("world"));
+  REQUIRE_THAT("hello world", Catch::Matchers::ContainsSubstring("hello"));
+  REQUIRE_THAT("hello world", Catch::Matchers::Equals("hello world"));
+  REQUIRE_THAT("hello world", Catch::Matchers::Matches(R"~(hello \w*)~"));
 
-  REQUIRE_THAT("hello world", Catch::EndsWith("WORLD", Catch::CaseSensitive::No));
+  REQUIRE_THAT("hello world", Catch::Matchers::EndsWith("WORLD", Catch::CaseSensitive::No));
 
-  REQUIRE_THAT("hello world", Catch::StartsWith("hello") && Catch::EndsWith("world"));
-  REQUIRE_THAT("hello world", Catch::StartsWith("hello") && !Catch::Contains("dog"));
+  REQUIRE_THAT("hello world",
+               Catch::Matchers::StartsWith("hello") && Catch::Matchers::EndsWith("world"));
+  REQUIRE_THAT("hello world",
+               Catch::Matchers::StartsWith("hello") && !Catch::Matchers::ContainsSubstring("dog"));
   // Bugs, &&等运算符不会持有matcher对象的所有权，所以下面的代码会crash
   // auto match_expression = Catch::StartsWith("hello") && Catch::EndsWith("world");
   // REQUIRE_THAT("hello world", match_expression);
