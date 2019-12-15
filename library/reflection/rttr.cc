@@ -17,17 +17,37 @@
  * limitations under the License.
  */
 
-#include <rttr/registration>
+#include <catch2/catch_test_macros.hpp>
+#include <rttr/registration.h>
+#include <rttr/type.h>
 
-struct MyStruct {
-  MyStruct() {}
-  void func(double) {}
-  int data;
+#include <vector>
+
+struct A {
+  int a;
+  int b;
+};
+
+struct B {
+  std::vector<A> as;
+};
+
+struct C {
+  A a;
+  B b;
 };
 
 RTTR_REGISTRATION {
-  rttr::registration::class_<MyStruct>("MyStruct")
-      .constructor<>()
-      .property("data", &MyStruct::data)
-      .method("func", &MyStruct::func);
+  rttr::registration::class_<A>("A")
+      .property("a", &A::a)(rttr::metadata("thrift", "1,required"))
+      .property("b", &A::b)(rttr::metadata("thrift", "2,required"));
+  rttr::registration::class_<B>("B").property("as", &B::as);
+  rttr::registration::class_<C>("C").property("b", &C::b).property("a", &C::a);
+}
+
+TEST_CASE("basic usage", "[rttr]") {
+  rttr::type t = rttr::type::get<A>();
+  for (auto& prop : t.get_properties()) {
+    // REQUIRE(prop.get_name() == "a" || prop.get_name() == "b");
+  }
 }
