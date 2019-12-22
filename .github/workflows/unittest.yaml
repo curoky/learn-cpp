@@ -51,7 +51,18 @@ jobs:
       #   with:
       #     ssh-private-key: ${{ secrets.RULES_PKG_SSH_PRIVATE_KEY }}
 
-      - uses: bazelbuild/setup-bazelisk@v2
+      - name: mount bazel cache
+        uses: actions/cache@v3
+        with:
+          path: /tmp/remote-cache
+          key: bazel-${{ github.run_id }}-${{ github.sha }}
+          restore-keys: |
+            bazel-
+
+      - run: curl http://remote-cache:8080/status >> $GITHUB_STEP_SUMMARY
+
+      - name: setup bazel remote cache
+        run: echo 'build --remote_cache=grpc://remote-cache:9092' >> ~/.bazelrc
 
       - name: setup gcc
         run: sudo apt-get install -y gcc-11 g++-11 gperf
