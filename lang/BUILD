@@ -19,18 +19,20 @@ load("@rules_cc//cc:defs.bzl", "cc_test")
 load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_test(
-    name = "example",
+    name = "main",
     testonly = False,
-    srcs = glob(["**/*.cc"]),
+    srcs = glob(
+        [
+            "*.h",
+            "*.cc",
+            "**/*.h",
+            "**/*.cc",
+        ],
+    ),
     copts = TEST_CPP_COPTS,
     linkopts = TEST_LINKOPTS,
     deps = [
-        "//utilities",
-        "@boost//:container_hash",
-        "@boost//:functional",
-        "@com_github_abseil_abseil_cpp//absl/algorithm",
-        "@com_github_abseil_abseil_cpp//absl/debugging:demangle_internal",
-        "@com_github_curoky_wolic//:catch2_main",
+        "@com_github_catchorg_catch2//:catch2_main",
         "@com_github_facebook_folly//:folly",
         "//technique:class_utils",
     ],
