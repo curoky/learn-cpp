@@ -1,25 +1,3 @@
 /bazel-*
 builddir
 compile_commands.json
-!build-system/cmake/hello/compile_commands.json
-
-## thrift
-**/gen-cpp/*
-**/gen-go/*
-**/gen-java/*
-
-# python
-*.pyc
-
-## poetry
-dist
-
-# golang
-coverage.txt
-design-pattern/dependency_injection/wire/wire_gen.go
-lang/go/go_enum_test_enum.go
-distributed/rpc/thrift/tools/proxy-buffered-to-framed
-
-# clang
-clang-analysis
-compile_commands.json
