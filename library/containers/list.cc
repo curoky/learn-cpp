@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 
-#include <catch2/catch.hpp>
+#include <boost/intrusive/list.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #include <functional>
 #include <list>
@@ -28,4 +29,40 @@ TEST_CASE("erase", "[List]") {
   auto iter = nubs.begin();
   iter = nubs.erase(iter);
   REQUIRE(*iter == 2);
+}
+
+/* https://www.boost.org/doc/libs/1_78_0/doc/html/intrusive/usage.html
+ * 需要在特定场景下配合特定的使用技巧。因为 intrusive list
+ * 本身是不会维护节点的生命周期的，所以直接插入栈上分配的对象，完全没有意义，
+ * 如果额外在用另外一个容器维护节点的生命周期，就略显脑残了。
+ */
+
+// Case1: Call Once Function list
+struct Func : public boost::intrusive::list_base_hook<
+                  boost::intrusive::link_mode<boost::intrusive::auto_unlink>> {
+  using List = boost::intrusive::list<Func, boost::intrusive::constant_time_size<false>>;
+
+  explicit Func(std::function<void()> func) : func(std::move(func)) {}
+
+  void call() {
+    std::invoke(func);
+    delete this;
+  }
+
+  std::function<void()> func;
+};
+
+TEST_CASE("intrusive list", "[List]") {
+  Func::List list;
+  REQUIRE(list.size() == 0);
+  size_t count = 0;
+  {
+    // insert func
+    auto* func = new Func([&count]() { count++; });
+    list.push_back(*func);
+  }
+  REQUIRE(list.size() == 1);
+  list.front().call();
+  REQUIRE(list.size() == 0);
+  REQUIRE(count == 1);
 }
