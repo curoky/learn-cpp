@@ -16,68 +16,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  bazel-with-remote-cache:
-    runs-on: ubuntu-22.04
-    container:
-      image: curoky/my-own-x:ubuntu22.04-build
-      volumes:
-        - /tmp:/tmp
-    services:
-      httpbin:
-        image: kennethreitz/httpbin
-        ports:
-          - 3200:80
-
-      remote-cache:
-        image: curoky/my-own-x:bazel-remote-cache
-        ports:
-          - 8080:8080
-          - 9092:9092
-        options: >-
-          -u 1001:121
-        env:
-          BAZEL_REMOTE_MAX_SIZE: 2
-          BAZEL_REMOTE_DIR: /data/remote-cache
-        volumes:
-          - /tmp:/data
-
-    steps:
-      - uses: actions/checkout@v3
-
-      # - name: cleanup disk
-      #   run: sudo rm -rf /usr/local/lib/android /usr/local/.ghcup /usr/share/dotnet /usr/share/swift
-
-      # - uses: webfactory/ssh-agent@v0.5.4
-      #   with:
-      #     ssh-private-key: ${{ secrets.RULES_PKG_SSH_PRIVATE_KEY }}
-
-      - name: mount bazel cache
-        uses: actions/cache@v3
-        with:
-          path: /tmp/remote-cache
-          key: bazel-${{ github.run_id }}-${{ github.sha }}
-          restore-keys: |
-            bazel-
-
-      - run: curl http://remote-cache:8080/status >> $GITHUB_STEP_SUMMARY
-
-      - name: setup bazel remote cache
-        run: echo 'build --remote_cache=grpc://remote-cache:9092' >> ~/.bazelrc
-
-      - name: setup gcc
-        run: sudo apt-get install -y gcc-11 g++-11 gperf
-
-      - name: bazel build
-        run: bazel build --remote_download_minimal --jvmopt="-Xmx:8G" --jvmopt="-Xms:512m" //lang/cpp/... || echo error
-
-      - name: bazel test
-        run: bazel test //lang/cpp/... || echo ignore error
-
-      - run: curl http://remote-cache:8080/status >> $GITHUB_STEP_SUMMARY
-
-      - uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-        timeout-minutes: 30
+  # - name: cleanup disk
+  #   run: sudo rm -rf /usr/local/lib/android /usr/local/.ghcup /usr/share/dotnet /usr/share/swift
 
   # - uses: webfactory/ssh-agent@v0.5.4
   #   with:
