@@ -81,99 +81,94 @@ jobs:
         if: ${{ failure() }}
         timeout-minutes: 30
 
-  cmake-vcpkg:
-    runs-on: ubuntu-20.04
+  # cmake-vcpkg:
+  #   runs-on: ubuntu-22.04
+  #   env:
+  #     VCPKG_ROOT: /opt/vcpkg
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Setup vcpkg
+  #       run: |
+  #         git clone https://github.com/microsoft/vcpkg /opt/vcpkg
+  #         /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics -useSystemBinaries
+  #         echo '/opt/vcpkg' >> $GITHUB_PATH
 
-    container:
-      image: curoky/compile:ubuntu21.10
+  #     - name: mount vcpkg cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/.cache/vcpkg
+  #         key: vcpkg-${{ github.run_id }}-${{ github.sha }}
+  #         restore-keys: |
+  #           vcpkg-
 
-      - name: mount vcpkg cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/vcpkg
-          key: vcpkg-${{ github.run_id }}-${{ github.sha }}
-          restore-keys: |
-            vcpkg-
+  #     - name: cleanup cache
+  #       if: ${{ github.event_name == 'schedule' }}
+  #       run: rm -rf ~/.cache/vcpkg/*
 
-      - name: cleanup cache
-        if: ${{ github.event_name == 'schedule' }}
-        run: rm -rf ~/.cache/vcpkg/*
+  #     - name: ccache
+  #       uses: hendrikmuhs/ccache-action@v1.2
+  #       with:
+  #         verbose: 2
+  #         key: vcpkg-ccache-${{ github.run_id }}-${{ github.sha }}
+  #         restore-keys: |
+  #           vcpkg-ccache-
 
-      - name: ccache
-        uses: hendrikmuhs/ccache-action@v1.2
-        with:
-          verbose: 2
-          key: vcpkg-ccache-${{ github.run_id }}-${{ github.sha }}
-          restore-keys: |
-            vcpkg-ccache-
+  #     - name: Setup GCC
+  #       uses: egor-tensin/setup-gcc@v1
+  #       with:
+  #         version: 11
+  #         platform: x64
 
-      - name: Setup GCC
-        uses: egor-tensin/setup-gcc@v1
-        with:
-          version: 11
-          platform: x64
+  #     - name: Install tools
+  #       run: brew install go-task/tap/go-task cmake ninja thrift
 
-      - name: Install tools
-        run: brew install go-task/tap/go-task cmake ninja thrift
+  #     - name: install vcpkg package
+  #       run: task vcpkg
 
-      - name: install vcpkg package
-        run: task vcpkg
+  #     - name: Build
+  #       run: task cmake -- vcpkg
 
-      - name: Build
-        run: task cmake -- vcpkg
+  #     - uses: mxschmitt/action-tmate@v3
+  #       if: ${{ failure() }}
+  #       timeout-minutes: 30
 
-      - uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-        timeout-minutes: 30
+  # cmake-conan:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-  cmake-conan:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
+  #     - name: mount conan cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/.conan/data
+  #         key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
 
-      - name: mount conan cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.conan/data
-          key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
+  #     - name: ccache
+  #       uses: hendrikmuhs/ccache-action@v1.2
+  #       with:
+  #         verbose: 2
+  #         key: conan-ccache-${{ github.run_id }}-${{ github.sha }}
+  #         restore-keys: |
+  #           conan-ccache-
 
-      - name: ccache
-        uses: hendrikmuhs/ccache-action@v1.2
-        with:
-          verbose: 2
-          key: conan-ccache-${{ github.run_id }}-${{ github.sha }}
-          restore-keys: |
-            conan-ccache-
+  #     - name: Setup GCC
+  #       uses: egor-tensin/setup-gcc@v1
+  #       with:
+  #         version: 11
+  #         platform: x64
 
-      - name: Setup GCC
-        uses: egor-tensin/setup-gcc@v1
-        with:
-          version: 11
-          platform: x64
+  #     - name: Install tools
+  #       run: brew install go-task/tap/go-task cmake ninja thrift
 
-      - name: Install tools
-        run: brew install go-task/tap/go-task cmake ninja thrift
+  #     - name: Install conan
+  #       run: brew install conan
 
-      - name: Install conan
-        run: brew install conan
+  #     - name: install conan package
+  #       run: task conan
 
-      - name: install conan package
-        run: task conan
+  #     - name: Build
+  #       run: task cmake -- conan
 
-      - name: Build
-        run: task cmake -- conan
-
-      - uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-        timeout-minutes: 30
-
-  cmake-cpm:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: setup deps
-        run: brew install cmake ninja go-task/tap/go-task
-
-      - name: build
-        run: task cmake
+  #     - uses: mxschmitt/action-tmate@v3
+  #       if: ${{ failure() }}
+  #       timeout-minutes: 30
