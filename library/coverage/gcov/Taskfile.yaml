@@ -1,0 +1,25 @@
+version: '3'
+
+tasks:
+  bazel:
+    cmds:
+      - bazel coverage --combined_report=lcov :main
+      - genhtml --output genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat"
+  gcc:
+    cmds:
+      - g++ -fprofile-arcs -ftest-coverage -c main.cc -o main.o
+      - g++ main.o -o main -l gcov
+      - ./main
+  lcov:
+    deps:
+      - gcc
+    cmds:
+      - lcov -d . -c -o report.info
+      - genhtml report.info -o dist
+  gcovr:
+    deps:
+      - gcc
+    cmds:
+      - gcovr -r . --html --html-details -o report.html
+  clean:
+    - rm -rf main main.o main.gcda main.gcno report.* genhtml
