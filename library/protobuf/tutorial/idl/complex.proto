@@ -1,0 +1,83 @@
+// Copyright (c) 2018-2022 curoky(cccuroky@gmail.com).
+//
+// This file is part of learn-cpp.
+// See https://github.com/curoky/learn-cpp for further info.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+package idl.pb;
+import "google/protobuf/any.proto";
+
+// https://developers.google.com/protocol-buffers/docs/proto3
+
+message MockRequest {
+  // basic type
+  bool var_bool = 1;
+  int32 var_int32 = 2;
+  int64 var_int64 = 3;
+  uint32 var_uint32 = 4;
+  uint64 var_uint64 = 5;
+  float var_float = 6;
+  double var_double = 7;
+  string var_str = 8;
+  bytes var_bytes = 9;
+
+  // enum
+  enum EnumType {  // protolint:disable:this ENUM_FIELD_NAMES_PREFIX
+    UNSPECIFIED = 0;
+    ONE = 1;
+    TWO = 2;
+    THREE = 3;
+    FOUR = 4;
+  }
+
+  EnumType var_enum = 10;
+
+  // container
+  repeated int32 var_int32_lists = 11;
+  repeated string var_string_lists = 12;
+  map<int32, string> var_map = 13;
+
+  // inner class
+  message InnerClass {
+    bool var_bool = 1;
+    int32 var_int32 = 2;
+  }
+  InnerClass var_inner_class = 14;
+
+  // any
+  google.protobuf.Any var_any = 15;
+
+  // oneof
+  oneof test_oneof {
+    bool var_oneof_bool = 16;
+    int32 var_oneof_int32 = 17;
+  }
+
+  // Field Requiredness
+  // Required fields are not allowed in proto3
+  // required int32 var_required_i32 = 18;
+  // Explicit 'optional' labels are disallowed in the Proto3 syntax. To define
+  // 'optional' fields in Proto3, simply remove the 'optional' label, as
+  // fields are 'optional' by default. optional int32 var_optional_i32 = 19;
+}
+
+message MockResponse {
+  MockRequest req = 1;
+}
+
+// The greeting service definition.
+service EchoService {
+  rpc Echo(MockRequest) returns (MockResponse) {}
+}
