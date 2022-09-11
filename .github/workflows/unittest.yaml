@@ -3,27 +3,17 @@ name: Unittest
 on:
   push:
     paths:
-      - '.github/workflows/unittest-cpp.yaml'
-      - 'lang/cpp/**'
-      - '**.h'
-      - '**.cc'
+      - '.github/workflows/unittest.yaml'
+      - 'lang/**'
+      - 'library/**'
       - 'WORKSPACE'
-      - '**/BUILD'
-      - '**/CMakeLists.txt'
-      - '**.cmake'
   schedule:
     - cron: '0 0 * * 6'
   workflow_dispatch:
 
 jobs:
-  # - name: cleanup disk
-  #   run: sudo rm -rf /usr/local/lib/android /usr/local/.ghcup /usr/share/dotnet /usr/share/swift
-
-  # - uses: webfactory/ssh-agent@v0.5.4
-  #   with:
-  #     ssh-private-key: ${{ secrets.RULES_PKG_SSH_PRIVATE_KEY }}
-  bazel-on-buildbuddy:
-    runs-on: ubuntu-22.04
+  test:
+    runs-on: ubuntu-latest
     services:
       httpbin:
         image: kennethreitz/httpbin
@@ -80,95 +70,3 @@ jobs:
       - uses: mxschmitt/action-tmate@v3
         if: ${{ failure() }}
         timeout-minutes: 30
-
-  # cmake-vcpkg:
-  #   runs-on: ubuntu-22.04
-  #   env:
-  #     VCPKG_ROOT: /opt/vcpkg
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Setup vcpkg
-  #       run: |
-  #         git clone https://github.com/microsoft/vcpkg /opt/vcpkg
-  #         /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics -useSystemBinaries
-  #         echo '/opt/vcpkg' >> $GITHUB_PATH
-
-  #     - name: mount vcpkg cache
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ~/.cache/vcpkg
-  #         key: vcpkg-${{ github.run_id }}-${{ github.sha }}
-  #         restore-keys: |
-  #           vcpkg-
-
-  #     - name: cleanup cache
-  #       if: ${{ github.event_name == 'schedule' }}
-  #       run: rm -rf ~/.cache/vcpkg/*
-
-  #     - name: ccache
-  #       uses: hendrikmuhs/ccache-action@v1.2
-  #       with:
-  #         verbose: 2
-  #         key: vcpkg-ccache-${{ github.run_id }}-${{ github.sha }}
-  #         restore-keys: |
-  #           vcpkg-ccache-
-
-  #     - name: Setup GCC
-  #       uses: egor-tensin/setup-gcc@v1
-  #       with:
-  #         version: 11
-  #         platform: x64
-
-  #     - name: Install tools
-  #       run: brew install go-task/tap/go-task cmake ninja thrift
-
-  #     - name: install vcpkg package
-  #       run: task vcpkg
-
-  #     - name: Build
-  #       run: task cmake -- vcpkg
-
-  #     - uses: mxschmitt/action-tmate@v3
-  #       if: ${{ failure() }}
-  #       timeout-minutes: 30
-
-  # cmake-conan:
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: mount conan cache
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ~/.conan/data
-  #         key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
-
-  #     - name: ccache
-  #       uses: hendrikmuhs/ccache-action@v1.2
-  #       with:
-  #         verbose: 2
-  #         key: conan-ccache-${{ github.run_id }}-${{ github.sha }}
-  #         restore-keys: |
-  #           conan-ccache-
-
-  #     - name: Setup GCC
-  #       uses: egor-tensin/setup-gcc@v1
-  #       with:
-  #         version: 11
-  #         platform: x64
-
-  #     - name: Install tools
-  #       run: brew install go-task/tap/go-task cmake ninja thrift
-
-  #     - name: Install conan
-  #       run: brew install conan
-
-  #     - name: install conan package
-  #       run: task conan
-
-  #     - name: Build
-  #       run: task cmake -- conan
-
-  #     - uses: mxschmitt/action-tmate@v3
-  #       if: ${{ failure() }}
-  #       timeout-minutes: 30
