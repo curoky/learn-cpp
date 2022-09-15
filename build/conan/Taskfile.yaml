@@ -2,7 +2,11 @@ version: '3'
 
 tasks:
   default:
+    env:
+      CXXFLAGS: -Wno-deprecated-copy -Wno-maybe-uninitialized # just for cppfs
     cmds:
+      - conan export recipes/cppfs
+      - conan export recipes/restclient-cpp
       - conan install conanfile.txt --output-folder=../../builddir/conan --install-folder=../../builddir/conan --build=missing -pr:b=default --profile conanrc
       - >
         sed -i
@@ -51,19 +55,14 @@ tasks:
         -e 's/name="openssl"/name="org_openssl"/g'
         -e 's/name="zstd"/name="com_github_facebook_zstd"/g'
         ../../builddir/conan/dependencies.bzl
-      - sed -i
+      - >
+        find ../../builddir/conan/ -type f -exec sed -i
         -e 's|@fmt|@com_github_fmtlib_fmt//:fmt|'
-        ../../builddir/conan/spdlog/BUILD
+        -e 's|@libcurl|@com_github_curl_curl//:libcurl|'
+        -e 's|@openssl|@org_openssl//:openssl|'
+        -e 's|@xz_utils|@org_xz_xz//:xz|'
+        {} \;
       - sed -i
         -e 's/xz_utils/xz/'
         ../../builddir/conan/xz_utils/BUILD
-      - sed -i
-        -e 's|@openssl|@org_openssl//:openssl|'
-        ../../builddir/conan/libevent/BUILD
-      - sed -i
-        -e 's|@xz_utils|@org_xz_xz//:xz|'
-        ../../builddir/conan/libunwind/BUILD
       - cp -f openssl.BUILD ../../builddir/conan/openssl/BUILD
-      # - sed -i
-      #   -e 's/@openssl/@org_openssl/'
-      #   ../../builddir/conan/libevent/BUILD
