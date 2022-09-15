@@ -64,3 +64,6 @@ BazelToolchain
 # catch2:with_main=True
 rttr:with_rtti=True
 # gflags:GFLAGS_NAMESPACE=gflags
+
+[imports]
+bin, * -> ./bin

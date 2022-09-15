@@ -151,14 +151,14 @@ def pkg_rules_dependencies():
         patch_cmds = ["mv src/catch2/catch_all.hpp src/catch2/catch.hpp"],
     )
 
-    http_archive(
-        name="com_github_felixguendling_cista",
-        urls=[
-            "https://github.com/felixguendling/cista/archive/refs/heads/master.tar.gz"
-        ],
-        strip_prefix="cista-master",
-        build_file="@com_curoky_tame//:recipes/c/cista/default/BUILD",
-    )
+    # http_archive(
+    #     name="com_github_felixguendling_cista",
+    #     urls=[
+    #         "https://github.com/felixguendling/cista/archive/refs/heads/master.tar.gz"
+    #     ],
+    #     strip_prefix="cista-master",
+    #     build_file="@com_curoky_tame//:recipes/c/cista/default/BUILD",
+    # )
 
     # http_archive(
     #     name="com_github_google_cityhash",
@@ -518,12 +518,12 @@ def pkg_rules_dependencies():
     #     build_file="@com_curoky_tame//:recipes/l/lz4/default/BUILD",
     # )
 
-    http_archive(
-        name="org_gnu_m4",
-        urls=["https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz"],
-        strip_prefix="m4-1.4.19",
-        build_file="@com_curoky_tame//:recipes/m/m4/default/BUILD",
-    )
+    # http_archive(
+    #     name="org_gnu_m4",
+    #     urls=["https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz"],
+    #     strip_prefix="m4-1.4.19",
+    #     build_file="@com_curoky_tame//:recipes/m/m4/default/BUILD",
+    # )
 
     # http_archive(
     #     name="com_github_msgpack_msgpack_c",
@@ -665,12 +665,12 @@ def pkg_rules_dependencies():
         urls = [
             "https://github.com/nelhage/rules_boost/archive/refs/heads/master.tar.gz",
         ],
-        strip_prefix="rules_boost-master",
-        patch_cmds=[
-            "sed -i -e 's/openssl/org_openssl/g' boost/boost.bzl",
-            "sed -i -e 's/org_lzma_lzma/org_xz_xz/g' boost/boost.bzl",
-            "sed -i -e 's?org_lzma_lzma//:lzma?org_xz_xz//:xz?g' BUILD.boost",
-            "sed -i -e 's/org_lzma_lzma/org_xz_xz/g' BUILD.lzma"
+        strip_prefix = "rules_boost-master",
+        patch_cmds = [
+            # "sed -i -e 's/openssl/org_openssl/g' boost/boost.bzl",
+            # "sed -i -e 's/org_lzma_lzma/org_xz_xz/g' boost/boost.bzl",
+            # "sed -i -e 's?org_lzma_lzma//:lzma?org_xz_xz//:xz?g' BUILD.boost",
+            # "sed -i -e 's/org_lzma_lzma/org_xz_xz/g' BUILD.lzma"
         ],
     )
 
@@ -820,14 +820,14 @@ def pkg_rules_dependencies():
     #     build_file="@com_curoky_tame//:recipes/x/xxhash/default/BUILD",
     # )
 
-    http_archive(
-        name="org_xz_xz",
-        urls=[
-            "https://github.com/xz-mirror/xz/archive/refs/heads/master.tar.gz"
-        ],
-        strip_prefix="xz-master",
-        build_file="@com_curoky_tame//:recipes/x/xz/default/BUILD",
-    )
+    # http_archive(
+    #     name="org_xz_xz",
+    #     urls=[
+    #         "https://github.com/xz-mirror/xz/archive/refs/heads/master.tar.gz"
+    #     ],
+    #     strip_prefix="xz-master",
+    #     build_file="@com_curoky_tame//:recipes/x/xz/default/BUILD",
+    # )
 
     # http_archive(
     #     name="net_zlib_zlib",
