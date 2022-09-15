@@ -30,6 +30,6 @@ cc_test(
     deps = [
         "//library/protobuf/tutorial/idl:complex_cc_proto",
         "@com_github_catchorg_catch2//:catch2_main",
-        "@com_github_nlohmann_json//:json",
+        "@com_github_nlohmann_json//:nlohmann_json",
     ],
 )

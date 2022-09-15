@@ -38,8 +38,8 @@ cc_test(
         "@com_github_gflags_gflags//:gflags",
         "@com_github_libevent_libevent//:libevent",
         "@com_github_libuv_libuv//:libuv",
-        "@com_github_msgpack_msgpack_c//:msgpack",
-        "@com_github_renatogarcia_icecream_cpp//:icecream",
+        "@com_github_renatogarcia_icecream_cpp//:icecream-cpp",
+        "@com_github_ryanhaining_cppitertools//:cppitertools",
         "@com_github_yhirose_cpp_peglib//:cpp-peglib",
         "@jemalloc",
         "@libiberty",
@@ -98,13 +98,15 @@ cc_test(
         "@com_github_aappleby_smhasher//:murmurhash",
 
         # http
+        # "@com_github_curl_curl//:curl",
+        "@com_github_curl_curl//:libcurl",
+        # "@com_github_mrtazz_restclient_cpp//:restclient",
+        "@com_github_mrtazz_restclient_cpp//:restclient-cpp",
         "@com_github_libcpr_cpr//:cpr",
-        "@com_github_curl_curl//:curl",
-        "@com_github_mrtazz_restclient_cpp//:restclient",
         "@com_github_yhirose_cpp_httplib//:cpp-httplib",
 
         # json
-        "@com_github_nlohmann_json//:json",
+        "@com_github_nlohmann_json//:nlohmann_json",
         "@com_github_open_source_parsers_jsoncpp//:jsoncpp",
         "@com_github_tencent_rapidjson//:rapidjson",
         "@com_github_davegamble_cjson//:cjson",
