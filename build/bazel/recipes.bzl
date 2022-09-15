@@ -357,11 +357,11 @@ def pkg_rules_dependencies():
     )
 
     http_archive(
-        name="com_github_google_googletest",
-        urls=[
-            "https://github.com/google/googletest/archive/refs/heads/main.tar.gz"
+        name = "com_github_google_googletest",
+        urls = [
+            "https://github.com/google/googletest/archive/refs/tags/release-1.12.1.tar.gz",
         ],
-        strip_prefix="googletest-main",
+        strip_prefix = "googletest-release-1.12.1",
     )
 
     http_archive(
