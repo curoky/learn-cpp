@@ -7,10 +7,11 @@ tasks:
       - >
         sed -i
         -e 's/name=""/name=""/g'
-        -e 's/name=""/name=""/g'
+        -e 's/name="xz_utils"/name="org_xz_xz"/g'
         -e 's/name="argon2"/name="com_github_p_h_c_phc_winner_argon2"/g'
         -e 's/name="bitsery"/name="com_github_fraillt_bitsery"/g'
         -e 's/name="boost"/name="boost_conan"/g'
+        -e 's/name="cista"/name="com_github_felixguendling_cista"/g'
         -e 's/name="cityhash"/name="com_github_google_cityhash"/g'
         -e 's/name="cjson"/name="com_github_davegamble_cjson"/g'
         -e 's/name="concurrentqueue"/name="com_github_cameron314_concurrentqueue"/g'
@@ -47,12 +48,22 @@ tasks:
         -e 's/name="thrift"/name="com_github_apache_thrift"/g'
         -e 's/name="xxhash"/name="com_github_cyan4973_xxhash"/g'
         -e 's/name="zlib"/name="net_zlib_zlib"/g'
+        -e 's/name="openssl"/name="org_openssl"/g'
         -e 's/name="zstd"/name="com_github_facebook_zstd"/g'
         ../../builddir/conan/dependencies.bzl
-      # -e 's/name="openssl"/name="org_openssl"/g'
-      # -e 's/name="cista"/name="com_github_felixguendling_cista"/g'
+      - sed -i
+        -e 's|@fmt|@com_github_fmtlib_fmt//:fmt|'
+        ../../builddir/conan/spdlog/BUILD
       - sed -i
         -e 's/xz_utils/xz/'
         ../../builddir/conan/xz_utils/BUILD
+      - sed -i
+        -e 's|@openssl|@org_openssl//:openssl|'
+        ../../builddir/conan/libevent/BUILD
+      - sed -i
+        -e 's|@xz_utils|@org_xz_xz//:xz|'
+        ../../builddir/conan/libunwind/BUILD
       - cp -f openssl.BUILD ../../builddir/conan/openssl/BUILD
-      - cp -f folly.BUILD ../../builddir/conan/folly/BUILD
+      # - sed -i
+      #   -e 's/@openssl/@org_openssl/'
+      #   ../../builddir/conan/libevent/BUILD

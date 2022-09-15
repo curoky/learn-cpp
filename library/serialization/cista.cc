@@ -17,9 +17,9 @@
  * limitations under the License.
  */
 
-#include <assert.h>               // for assert
-#include <catch2/catch.hpp>       // for StringRef, TEST_CASE
-#include <cista/serialization.h>  // for deserialize, serialize
+#include <assert.h>
+#include <catch2/catch_test_macros.hpp>
+#include <cista.h>
 
 #include <vector>
 
