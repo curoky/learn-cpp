@@ -28,14 +28,6 @@ jobs:
           path: ~/.conan/data
           key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
 
-      - name: ccache
-        uses: hendrikmuhs/ccache-action@v1.2
-        with:
-          verbose: 2
-          key: conan-ccache-${{ github.run_id }}-${{ github.sha }}
-          restore-keys: |
-            conan-ccache-
-
       - name: Setup GCC
         uses: egor-tensin/setup-gcc@v1
         with:
@@ -43,15 +35,15 @@ jobs:
           platform: x64
 
       - name: Install tools
-        run: brew install llvm gperf go-task/tap/go-task cmake ninja thrift
+        run: |
+          sudo apt-get install cmake ninja-build lld
+          brew install conan go-task/tap/go-task
 
       - uses: actions/checkout@v3
 
-      - name: Install conan
-        run: brew install conan
-
       - name: install conan package
-        run: task conan
+        run: task
+        working-directory: config/conan
 
       - name: setup buildbuddy
         run: |
@@ -61,8 +53,8 @@ jobs:
           echo 'build --remote_timeout=3600' >> .bazelrc
           echo 'build --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_API }}' >> .bazelrc
 
-      - name: bazel build
-        run: bazel build --remote_download_minimal --jvmopt="-Xmx:8G" --jvmopt="-Xms:512m" //lang/cpp/... || echo error
+      - run: bazel build --remote_download_minimal //lang/...
+      - run: bazel test //lang/...
 
       - run: bazel build --remote_download_minimal //library/...
       - run: bazel test //library/...
