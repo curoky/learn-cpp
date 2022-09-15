@@ -17,10 +17,10 @@
 
 workspace(name = "com_github_curoky_learn_cpp")
 
-# load("@//:builddir/conan/dependencies.bzl", "load_conan_dependencies")
-# load_conan_dependencies()
-
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@//:builddir/conan/dependencies.bzl", "load_conan_dependencies")
+
+load_conan_dependencies()
 
 # '''
 git_repository(

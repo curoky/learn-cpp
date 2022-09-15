@@ -1,0 +1,58 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - conan install conanfile.txt --output-folder=../../builddir/conan --install-folder=../../builddir/conan --build=missing -pr:b=default --profile conanrc
+      - >
+        sed -i
+        -e 's/name=""/name=""/g'
+        -e 's/name=""/name=""/g'
+        -e 's/name="argon2"/name="com_github_p_h_c_phc_winner_argon2"/g'
+        -e 's/name="bitsery"/name="com_github_fraillt_bitsery"/g'
+        -e 's/name="boost"/name="boost_conan"/g'
+        -e 's/name="cityhash"/name="com_github_google_cityhash"/g'
+        -e 's/name="cjson"/name="com_github_davegamble_cjson"/g'
+        -e 's/name="concurrentqueue"/name="com_github_cameron314_concurrentqueue"/g'
+        -e 's/name="cpp-httplib"/name="com_github_yhirose_cpp_httplib"/g'
+        -e 's/name="cpp-peglib"/name="com_github_yhirose_cpp_peglib"/g'
+        -e 's/name="cppfs"/name="com_github_cginternals_cppfs"/g'
+        -e 's/name="cppitertools"/name="com_github_ryanhaining_cppitertools"/g'
+        -e 's/name="cpr"/name="com_github_libcpr_cpr"/g'
+        -e 's/name="crc32c"/name="com_github_google_crc32c"/g'
+        -e 's/name="double-conversion"/name="com_github_google_double_conversion"/g'
+        -e 's/name="fmt"/name="com_github_fmtlib_fmt"/g'
+        -e 's/name="hiredis"/name="com_github_redis_hiredis"/g'
+        -e 's/name="icecream-cpp"/name="com_github_renatogarcia_icecream_cpp"/g'
+        -e 's/name="libcurl"/name="com_github_curl_curl"/g'
+        -e 's/name="libevent"/name="com_github_libevent_libevent"/g'
+        -e 's/name="libsodium"/name="com_github_jedisct1_libsodium"/g'
+        -e 's/name="liburing"/name="com_github_axboe_liburing"/g'
+        -e 's/name="libuv"/name="com_github_libuv_libuv"/g'
+        -e 's/name="lua"/name="com_github_lua_lua"/g'
+        -e 's/name="lz4"/name="com_github_lz4_lz4"/g'
+        -e 's/name="msgpack-cxx"/name="com_github_msgpack_msgpack_c"/g'
+        -e 's/name="nameof"/name="com_github_neargye_nameof"/g'
+        -e 's/name="nlohmann_json"/name="com_github_nlohmann_json"/g'
+        -e 's/name="onetbb"/name="com_github_oneapi_src_onetbb"/g'
+        -e 's/name="parallel-hashmap"/name="com_github_greg7mdp_parallel_hashmap"/g'
+        -e 's/name="rapidjson"/name="com_github_tencent_rapidjson"/g'
+        -e 's/name="readerwriterqueue"/name="com_github_cameron314_readerwriterqueue"/g'
+        -e 's/name="refl-cpp"/name="com_github_veselink1_refl_cpp"/g'
+        -e 's/name="restclient-cpp"/name="com_github_mrtazz_restclient_cpp"/g'
+        -e 's/name="rttr"/name="com_github_rttrorg_rttr"/g'
+        -e 's/name="snappy"/name="com_github_google_snappy"/g'
+        -e 's/name="spdlog"/name="com_github_gabime_spdlog"/g'
+        -e 's/name="taskflow"/name="com_github_taskflow_taskflow"/g'
+        -e 's/name="thrift"/name="com_github_apache_thrift"/g'
+        -e 's/name="xxhash"/name="com_github_cyan4973_xxhash"/g'
+        -e 's/name="zlib"/name="net_zlib_zlib"/g'
+        -e 's/name="zstd"/name="com_github_facebook_zstd"/g'
+        ../../builddir/conan/dependencies.bzl
+      # -e 's/name="openssl"/name="org_openssl"/g'
+      # -e 's/name="cista"/name="com_github_felixguendling_cista"/g'
+      - sed -i
+        -e 's/xz_utils/xz/'
+        ../../builddir/conan/xz_utils/BUILD
+      - cp -f openssl.BUILD ../../builddir/conan/openssl/BUILD
+      - cp -f folly.BUILD ../../builddir/conan/folly/BUILD

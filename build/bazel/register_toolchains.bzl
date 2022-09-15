@@ -24,8 +24,6 @@ load("@hedron_compile_commands//:workspace_setup.bzl", "hedron_compile_commands_
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
-load("@com_justbuchanan_rules_qt//:qt_configure.bzl", "qt_configure")
-load("@com_justbuchanan_rules_qt//tools:qt_toolchain.bzl", "register_qt_toolchains")
 
 def pkg_register_toolchains():
     # https://github.com/nelhage/rules_boost/blob/master/BUILD.boost
@@ -48,10 +46,6 @@ def pkg_register_toolchains():
     rules_proto_dependencies()
 
     rules_proto_toolchains()
-
-    qt_configure()
-
-    register_qt_toolchains()
 
     # apple_support_dependencies()
 
