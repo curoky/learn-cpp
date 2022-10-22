@@ -44,7 +44,7 @@ jobs:
 
       - name: install conan package
         run: task
-        working-directory: config/conan
+        working-directory: build/conan
 
       - name: setup buildbuddy
         run: |
