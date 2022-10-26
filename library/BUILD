@@ -32,7 +32,6 @@ cc_test(
         "@com_github_abseil_abseil_cpp//absl/strings:str_format",
         "@com_github_cginternals_cppfs//:cppfs",
         "@com_github_facebook_fatal//:fatal",
-        "@com_github_facebook_fbthrift//:fbthrift",
         "@com_github_facebook_folly//:folly",
         "@com_github_fmtlib_fmt//:fmt",
         "@com_github_gflags_gflags//:gflags",
@@ -43,7 +42,6 @@ cc_test(
         "@com_github_yhirose_cpp_peglib//:cpp-peglib",
         "@jemalloc",
         "@libiberty",
-        # "@com_github_apache_thrift//:thrift",
 
         # logging
         "@com_github_google_glog//:glog",
