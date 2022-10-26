@@ -32,7 +32,6 @@ cc_test(
         "@com_github_abseil_abseil_cpp//absl/strings:str_format",
         "@com_github_cginternals_cppfs//:cppfs",
         "@com_github_facebook_fatal//:fatal",
-        "@com_github_facebook_fbthrift//:fbthrift",
         "@com_github_facebook_folly//:folly",
         "@com_github_fmtlib_fmt//:fmt",
         "@com_github_gflags_gflags//:gflags",

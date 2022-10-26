@@ -1,13 +1,5 @@
-#startup --host_jvm_args=-XX:-UseParallelGC
-#startup --output_base="~/.cache/bazel/base"
-#startup --output_user_root="~/.cache/bazel/user_root"
-
-build --show_timestamps --keep_going --jobs 180
-build --color=yes
 build --check_visibility=false
 build --compilation_mode=dbg
 build --dynamic_mode=off
-build --cxxopt="-std=c++20"
-# build --remote_executor=
 build --remote_download_toplevel
-query --keep_going
+build --cxxopt="-std=c++20"

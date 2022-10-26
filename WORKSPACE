@@ -40,6 +40,24 @@ load("//build/bazel:recipes.bzl", "pkg_rules_dependencies")
 
 pkg_rules_dependencies()
 
-load("//build/bazel:register_toolchains.bzl", "pkg_register_toolchains")
+load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 
-pkg_register_toolchains()
+boost_deps()
+
+load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
+
+rules_foreign_cc_dependencies()
+
+load("@hedron_compile_commands//:workspace_setup.bzl", "hedron_compile_commands_setup")
+
+hedron_compile_commands_setup()
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
