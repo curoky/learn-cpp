@@ -52,7 +52,7 @@ cc_test(
         "@com_github_google_googletest//:gtest",
 
         # concurrency
-        "@com_github_tyckesak_laugh//:laugh",
+        # "@com_github_tyckesak_laugh//:laugh",
         "@com_github_taskflow_taskflow//:taskflow",
         "@com_github_arximboldi_immer//:immer",
         "@com_github_oneapi_src_onetbb//:onetbb",
