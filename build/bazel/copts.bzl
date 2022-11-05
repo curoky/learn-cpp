@@ -15,14 +15,60 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""dumbo specific copts.
+"""specific copts.
 """
 
-load("@com_curoky_tame//bazel:copts.bzl", "BASE_CPP_COPTS", "BASE_C_COPTS", _DEFAULT_LINKOPTS = "DEFAULT_LINKOPTS", _TEST_CPP_COPTS = "TEST_CPP_COPTS", _TEST_LINKOPTS = "TEST_LINKOPTS")
+BASE_COPTS = [
+    "-g",
+    "-ggdb",
+    "-O0",
+    "-fno-omit-frame-pointer",
+    "-gno-statement-frontiers",
+    "-gno-variable-location-views",
+    "-Wall",
+    # "-rdynamic",
 
-DEFAULT_C_COPTS = BASE_C_COPTS
-DEFAULT_CPP_COPTS = BASE_CPP_COPTS
-TEST_CPP_COPTS = _TEST_CPP_COPTS
+    # for lldb
+    # https://stackoverflow.com/questions/58578615/cannot-inspect-a-stdstring-variable-in-lldb
+    # "-fstandalone-debug",
+]
 
-DEFAULT_LINKOPTS = _DEFAULT_LINKOPTS
-TEST_LINKOPTS = _TEST_LINKOPTS
+IGNORED_COPTS = [
+    # Note: We cannot require external libraries to conform to specifications
+    "-Wno-deprecated-declarations",
+    "-Wno-deprecated",
+    "-Wno-sign-compare",
+    "-Wno-unknown-pragmas",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-value",
+    "-Wno-unused-variable",
+    "-Wno-unused-local-typedefs",
+    "-Wno-maybe-uninitialized",
+]
+
+DEFAULT_C_COPTS = BASE_COPTS + IGNORED_COPTS + [
+    # "--std=gnu89",
+    "-std=gnu11",
+    "-D_GNU_SOURCE",
+    "-Wno-implicit-function-declaration",
+]
+
+DEFAULT_CPP_COPTS = BASE_COPTS + IGNORED_COPTS + [
+    "-std=c++23",
+]
+
+TEST_CPP_COPTS = DEFAULT_CPP_COPTS + [
+    "-fsanitize=address",
+]
+
+DEFAULT_LINKOPTS = [
+    "-latomic",
+    "-lpthread",
+    "-ldl",
+    "-fuse-ld=lld",
+]
+
+TEST_LINKOPTS = DEFAULT_LINKOPTS + [
+    "-fsanitize=address",
+]

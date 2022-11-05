@@ -17,7 +17,7 @@
 
 '''
 load("@rules_cc//cc:defs.bzl", "cc_test")
-load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
+load("//build/bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_test(
     name = "example",
