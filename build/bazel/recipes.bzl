@@ -178,17 +178,17 @@ def dep_libs():
         strip_prefix = "jsoncpp-master",
     )
 
-    http_archive(
-        name = "com_github_tyckesak_laugh",
-        urls = [
-            "https://github.com/tyckesak/laugh/archive/refs/heads/main.tar.gz",
-        ],
-        strip_prefix = "laugh-main",
-        build_file = "@com_curoky_tame//:recipes/l/laugh/default/BUILD",
-        patch_cmds = [
-            "sed -i -e 's$concurrentqueue/moodycamel/$$' Include/Laugh/Actor.hpp",
-        ],
-    )
+    # http_archive(
+    #     name = "com_github_tyckesak_laugh",
+    #     urls = [
+    #         "https://github.com/tyckesak/laugh/archive/refs/heads/main.tar.gz",
+    #     ],
+    #     strip_prefix = "laugh-main",
+    #     build_file = "@com_curoky_tame//:recipes/l/laugh/default/BUILD",
+    #     patch_cmds = [
+    #         "sed -i -e 's$concurrentqueue/moodycamel/$$' Include/Laugh/Actor.hpp",
+    #     ],
+    # )
 
     http_archive(
         name = "com_pagure_libaio",
