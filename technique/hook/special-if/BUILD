@@ -16,7 +16,7 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@com_curoky_tame//bazel:copts.bzl", "DEFAULT_C_COPTS", "TEST_LINKOPTS")
+load("//build/bazel:copts.bzl", "DEFAULT_C_COPTS", "TEST_LINKOPTS")
 
 cc_library(
     name = "bind",

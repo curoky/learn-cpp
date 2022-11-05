@@ -16,7 +16,7 @@
 # limitations under the License.
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
+load("//build/bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_library(
     name = "catch2_main",

@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@com_curoky_tame//bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
+load("//build/bazel:copts.bzl", "TEST_CPP_COPTS", "TEST_LINKOPTS")
 
 cc_binary(
     name = "main",
