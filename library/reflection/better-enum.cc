@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-#if __has_include(<better-enums/enum.h>)
 #include <better-enums/enum.h>
 #include <catch2/catch_test_macros.hpp>
 
@@ -34,5 +33,3 @@ TEST_CASE("[better-enum]: basic usage") {
   REQUIRE(Color::_from_string("Red") == +Color::Red);
   REQUIRE(c._size() == 8);
 }
-
-#endif

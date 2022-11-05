@@ -116,30 +116,28 @@ def dep_libs():
     )
 
     http_archive(
-        name = "com_github_facebook_fatal",
-        urls = [
-            "https://github.com/facebook/fatal/archive/refs/heads/main.tar.gz",
-        ],
-        strip_prefix = "fatal-main",
-        build_file = "@com_curoky_tame//:recipes/f/fatal/default/BUILD",
-    )
-    http_archive(
         name = "com_github_google_flatbuffers",
         urls = [
             "https://github.com/google/flatbuffers/archive/refs/tags/v2.0.0.tar.gz",
         ],
         strip_prefix = "flatbuffers-2.0.0",
     )
+
+    http_archive(
+        name = "com_github_facebook_fatal",
+        urls = [
+            "https://github.com/facebook/fatal/archive/refs/tags/v2022.10.31.00.tar.gz",
+        ],
+        strip_prefix = "fatal-2022.10.31.00",
+        build_file = "@com_curoky_tame//:recipes/f/fatal/default/BUILD",
+    )
     http_archive(
         name = "com_github_facebook_folly",
         urls = [
-            "https://github.com/facebook/folly/archive/refs/tags/v2022.04.25.00.tar.gz",
+            "https://github.com/facebook/folly/archive/refs/tags/v2022.10.31.00.tar.gz",
         ],
-        strip_prefix = "folly-2022.04.25.00",
+        strip_prefix = "folly-2022.10.31.00",
         build_file = "@com_curoky_tame//:recipes/f/folly/default/BUILD",
-        patch_cmds = [
-            "sed -i -e 's/constexpr ::folly::detail::safe_assert_terminate_w/::folly::detail::safe_assert_terminate_w/g' folly/lang/SafeAssert.h",
-        ],
     )
     http_archive(
         name = "com_github_gflags_gflags",
