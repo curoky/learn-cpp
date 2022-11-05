@@ -48,6 +48,10 @@ TEST_CASE("integer type", "[NumberLiteral]") {
   REQUIRE_TYPE(1LU, unsigned long);            // NOLINT
   REQUIRE_TYPE(1llu, unsigned long long int);  // NOLINT
   REQUIRE_TYPE(1LLU, unsigned long long int);  // NOLINT
+  REQUIRE_TYPE(1z, std::size_t);               // NOLINT
+  REQUIRE_TYPE(1Z, std::size_t);               // NOLINT
+  REQUIRE_TYPE(1zu, std::size_t);              // NOLINT
+  REQUIRE_TYPE(1ZU, std::size_t);              // NOLINT
 }
 
 TEST_CASE("bool type", "[NumberLiteral]") {

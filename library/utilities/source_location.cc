@@ -16,20 +16,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __clang__
-#if __has_include(<source_location>)
-#include <source_location>
-#else
-#include <experimental/source_location>
-
-namespace std {
-using namespace experimental;  // NOLINT
-}
-#endif
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_string.hpp>
 
+#include <source_location>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -58,5 +49,3 @@ TEST_CASE("basic usage", "[SourceLocation]") {
   REQUIRE(ret[3] == "CATCH2_INTERNAL_TEST_0");
 #endif
 }
-
-#endif
