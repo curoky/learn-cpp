@@ -1,0 +1,18 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - g++ -g without-catching-exception.cc -o without-catching-exception
+      - g++ -g access-nullptr.cc -o access-nullptr
+      - g++ -g stack-overflow.cc -o stack-overflow
+      - g++ -g out-of-memory.cc -o out-of-memory
+
+  clean:
+    cmds:
+      - >
+        rm -rf
+        without-catching-exception
+        access-nullptr
+        stack-overflow
+        out-of-memory
