@@ -14,11 +14,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      httpbin:
-        image: kennethreitz/httpbin
-        ports:
-          - 3200:80
     steps:
       - uses: bazelbuild/setup-bazelisk@v2
       - uses: Homebrew/actions/setup-homebrew@master
@@ -32,7 +27,7 @@ jobs:
       - name: Setup GCC
         uses: egor-tensin/setup-gcc@v1
         with:
-          version: 11
+          version: 12
           platform: x64
 
       - name: Install tools
@@ -54,11 +49,8 @@ jobs:
           echo 'build --remote_timeout=3600' >> .bazelrc
           echo 'build --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_API }}' >> .bazelrc
 
-      - run: bazel build --remote_download_minimal //lang/...
-      - run: bazel test //lang/...
-
-      - run: bazel build --remote_download_minimal //library/... || echo ignore
-      - run: bazel test //library/... || echo ignore
+      - run: bazel build --remote_download_minimal //...
+      - run: bazel test //...
 
       - uses: mxschmitt/action-tmate@v3
         if: ${{ failure() }}
