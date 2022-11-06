@@ -22,12 +22,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.conan/data
-          key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
+          key: conan-${{ runner.os }}-${{ hashFiles('build/conan/conanfile.txt') }}
 
       - name: Setup GCC
         uses: egor-tensin/setup-gcc@v1
         with:
-          version: 12
+          version: 11
           platform: x64
 
       - name: Install tools
