@@ -1,0 +1,30 @@
+version: '3'
+
+tasks:
+  default:
+    env:
+      # LD_PRELOAD: /home/cicada/.cache/conan/jemalloc/5.3.0/_/_/package/8f78592fd213f277cd15cb280c5b588d2da99701/lib/libjemalloc.so.2
+      # LD_LIBRARY_PATH: /home/cicada/.cache/conan/jemalloc/5.3.0/_/_/package/8f78592fd213f277cd15cb280c5b588d2da99701/lib
+      MALLOC_CONF: 'prof:true,prof_prefix:jeprof.out'
+    vars:
+      bin: ../../../bazel-bin/profiler/jemalloc/heap-profiling/main
+    cmds:
+      - bazel build :main
+      - ../../../bazel-bin/profiler/jemalloc/heap-profiling/main
+      - task: generate
+        vars:
+          bin: ../../../bazel-bin/profiler/jemalloc/heap-profiling/main
+          heap_file: malloc.directly
+          out: malloc-directly
+      - task: generate
+        vars:
+          bin: ../../../bazel-bin/profiler/jemalloc/heap-profiling/main
+          heap_file: malloc.container
+          out: malloc-container
+      # diff
+      - jeprof --show_bytes --svg {{.bin}} malloc.container --base=malloc.directly > diff.svg
+
+  generate:
+    cmds:
+      - jeprof --show_bytes --svg {{.bin}} {{.heap_file}} > {{.out}}.svg
+      - jeprof {{.bin}} {{.heap_file}} --collapsed | flamegraph.pl > {{.out}}-fg.svg
