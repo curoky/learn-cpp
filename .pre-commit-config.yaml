@@ -33,10 +33,10 @@ repos:
     hooks:
       - id: cpplint
         args: ['--linelength=100']
-  - repo: https://github.com/cheshirekow/cmake-format-precommit
-    rev: 'v0.6.13'
-    hooks:
-      - id: cmake-format
+  # - repo: https://github.com/cheshirekow/cmake-format-precommit
+  #   rev: 'v0.6.13'
+  #   hooks:
+  #     - id: cmake-format
   - repo: https://github.com/PyCQA/isort
     rev: '5.10.1'
     hooks:
