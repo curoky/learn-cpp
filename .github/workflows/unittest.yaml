@@ -15,6 +15,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: bazelbuild/setup-bazelisk@v2
       - uses: Homebrew/actions/setup-homebrew@master
 
@@ -34,8 +35,6 @@ jobs:
         run: |
           sudo apt-get install -y cmake ninja-build lld
           brew install conan go-task/tap/go-task
-
-      - uses: actions/checkout@v3
 
       - name: install conan package
         run: task
