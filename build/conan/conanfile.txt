@@ -12,7 +12,7 @@ cpr/1.9.0
 crc32c/1.1.2
 hiredis/1.0.2
 icecream-cpp/0.3.1
-jemalloc/5.2.1
+jemalloc/5.3.0
 libcurl/7.85.0
 libdwarf/20191104
 libevent/2.1.12
@@ -49,6 +49,8 @@ BazelToolchain
 [options]
 # catch2:with_main=True
 rttr:with_rtti=True
+jemalloc:enable_prof=True
+# jemalloc:shared=True
 
 [imports]
 bin, * -> ./bin
