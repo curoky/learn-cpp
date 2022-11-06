@@ -51,6 +51,7 @@ BazelToolchain
 rttr:with_rtti=True
 jemalloc:enable_prof=True
 # jemalloc:shared=True
+onetbb:shared=False
 
 [imports]
 bin, * -> ./bin
