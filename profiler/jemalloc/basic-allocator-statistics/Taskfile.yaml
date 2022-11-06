@@ -1,0 +1,9 @@
+version: '3'
+
+tasks:
+  default:
+    env:
+      MALLOC_CONF: 'stats_print:true'
+    cmds:
+      - bazel build :main
+      - ../../../bazel-bin/profiler/jemalloc/basic-allocator-statistics/main > out.txt 2>&1
