@@ -1,0 +1,23 @@
+VERSION 0.6
+FROM ubuntu:22.04
+
+## for apt to be noninteractive
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN true
+
+RUN apt-get update && apt-get install -y build-essential cmake clang clang-tools g++
+
+WORKDIR /code
+
+code:
+  COPY single-source single-source
+  COPY with-bazel with-bazel
+
+single-source:
+  FROM +code
+  WORKDIR /code/single-source
+  RUN scan-build -k g++ -c main.cc
+
+with-bazel:
+  FROM +code
+  WORKDIR /code/with-bazel
