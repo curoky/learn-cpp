@@ -1,0 +1,9 @@
+
+/code/with-compilation-database/main.cc should add these lines:
+
+/code/with-compilation-database/main.cc should remove these lines:
+- #include <algorithm>  // lines 19-19
+
+The full include-list for /code/with-compilation-database/main.cc:
+#include <iostream>  // for operator<<, endl, basic_ostream, cout, ostream
+---
