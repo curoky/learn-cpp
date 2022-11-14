@@ -1,0 +1,68 @@
+VERSION 0.6
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN true
+
+# Note: must guarantee the version of clang is equal to the version which iwyu build with.
+RUN apt-get update \
+  && apt-get install -y curl cmake make ninja-build iwyu clang-13 g++ gcc \
+  && curl -sSL -o /usr/bin/bazelisk https://github.com/bazelbuild/bazelisk/releases/download/v1.13.0/bazelisk-linux-amd64 \
+  && chmod +x /usr/bin/bazelisk
+
+WORKDIR /code
+
+code:
+  COPY single-source single-source
+  COPY with-bazel with-bazel
+  COPY with-make with-make
+  COPY with-cmake with-cmake
+  COPY with-compilation-database with-compilation-database
+
+single-source:
+  FROM +code
+  WORKDIR /code/single-source
+  RUN include-what-you-use -Xiwyu --cxx17ns main.cc 1> stdout.txt 2> stderr.txt || echo skip
+  RUN fix_include --comments -b --reorder -p "."  <stderr.txt || echo skip
+  SAVE ARTIFACT stdout.txt AS LOCAL "single-source/stdout.txt"
+  SAVE ARTIFACT stderr.txt AS LOCAL "single-source/stderr.txt"
+  SAVE ARTIFACT main.cc AS LOCAL "single-source/main-done.cc"
+
+with-make:
+  FROM +code
+  WORKDIR /code/with-make
+  RUN make -k CXX=include-what-you-use CXXFLAGS="-Xiwyu --cxx17ns" 1> stdout.txt 2> stderr.txt || echo skip
+  RUN fix_include --comments -b --reorder -p "."  <stderr.txt || echo skip
+  SAVE ARTIFACT stdout.txt AS LOCAL "with-make/stdout.txt"
+  SAVE ARTIFACT stderr.txt AS LOCAL "with-make/stderr.txt"
+  SAVE ARTIFACT main.cc AS LOCAL "with-make/main-done.cc"
+
+with-cmake:
+  FROM +code
+  WORKDIR /code/with-cmake
+  RUN cmake . -DCMAKE_CXX_INCLUDE_WHAT_YOU_USE="include-what-you-use;-w;-Xiwyu;--verbose=7"
+  RUN make 1> stdout.txt 2> stderr.txt || echo skip
+  RUN fix_include --comments -b --reorder -p "."  <stderr.txt || echo skip
+  SAVE ARTIFACT stdout.txt AS LOCAL "with-cmake/stdout.txt"
+  SAVE ARTIFACT stderr.txt AS LOCAL "with-cmake/stderr.txt"
+  SAVE ARTIFACT main.cc AS LOCAL "with-cmake/main-done.cc"
+
+with-bazel:
+  FROM +code
+  WORKDIR /code/with-bazel
+  RUN bazelisk run @hedron_compile_commands//:refresh_all
+  RUN iwyu_tool -j 2 -p "." . -- -Xiwyu --cxx17ns 1> stdout.txt 2> stderr.txt || echo skip
+  RUN fix_include --comments -b --reorder -p "."  <stdout.txt || echo skip
+  SAVE ARTIFACT stdout.txt AS LOCAL "with-bazel/stdout.txt"
+  SAVE ARTIFACT stderr.txt AS LOCAL "with-bazel/stderr.txt"
+  SAVE ARTIFACT main.cc AS LOCAL "with-bazel/main-done.cc"
+
+with-compilation-database:
+  FROM +code
+  WORKDIR /code/with-compilation-database
+  RUN cmake .
+  RUN iwyu_tool -j 2 -p "." . -- -Xiwyu --cxx17ns 1> stdout.txt 2> stderr.txt || echo skip
+  RUN fix_include --comments -b --reorder -p "."  <stdout.txt || echo skip
+  SAVE ARTIFACT stdout.txt AS LOCAL "with-compilation-database/stdout.txt"
+  SAVE ARTIFACT stderr.txt AS LOCAL "with-compilation-database/stderr.txt"
+  SAVE ARTIFACT main.cc AS LOCAL "with-compilation-database/main-done.cc"
