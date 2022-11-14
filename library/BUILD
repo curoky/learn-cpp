@@ -40,6 +40,9 @@ cc_test(
         "@com_github_renatogarcia_icecream_cpp//:icecream-cpp",
         "@com_github_ryanhaining_cppitertools//:cppitertools",
         "@com_github_yhirose_cpp_peglib//:cpp-peglib",
+        "@fast_float",
+        "@nanorange",
+        "@frozen",
         "@jemalloc",
         "@libiberty",
         "//technique:class_utils",
@@ -109,5 +112,6 @@ cc_test(
         "@com_github_open_source_parsers_jsoncpp//:jsoncpp",
         "@com_github_tencent_rapidjson//:rapidjson",
         "@com_github_davegamble_cjson//:cjson",
+        "@glaze",
     ],
 )
