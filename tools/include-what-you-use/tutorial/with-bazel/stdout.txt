@@ -1,0 +1,9 @@
+
+main.cc should add these lines:
+
+main.cc should remove these lines:
+- #include <algorithm>  // lines 19-19
+
+The full include-list for main.cc:
+#include <iostream>  // for operator<<, endl, basic_ostream, cout, ostream
+---
