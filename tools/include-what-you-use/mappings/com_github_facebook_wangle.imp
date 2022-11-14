@@ -1,0 +1,13 @@
+[
+	{ include : [ "<wangle/bootstrap/AcceptRoutingHandler-inl.h>", private, "<wangle/bootstrap/AcceptRoutingHandler.h>", public ]},
+	{ include : [ "<wangle/bootstrap/RoutingDataHandler-inl.h>", private, "<wangle/bootstrap/RoutingDataHandler.h>", public ]},
+	{ include : [ "<wangle/bootstrap/ServerBootstrap-inl.h>", private, "<wangle/bootstrap/ServerBootstrap.h>", public ]},
+	{ include : [ "<wangle/channel/HandlerContext-inl.h>", private, "<wangle/channel/HandlerContext.h>", public ]},
+	{ include : [ "<wangle/channel/Pipeline-inl.h>", private, "<wangle/channel/Pipeline.h>", public ]},
+	{ include : [ "<wangle/channel/broadcast/BroadcastHandler-inl.h>", private, "<wangle/channel/broadcast/BroadcastHandler.h>", public ]},
+	{ include : [ "<wangle/channel/broadcast/BroadcastPool-inl.h>", private, "<wangle/channel/broadcast/BroadcastPool.h>", public ]},
+	{ include : [ "<wangle/channel/broadcast/ObservingHandler-inl.h>", private, "<wangle/channel/broadcast/ObservingHandler.h>", public ]},
+	{ include : [ "<wangle/client/persistence/LRUInMemoryCache-inl.h>", private, "<wangle/client/persistence/LRUInMemoryCache.h>", public ]},
+	{ include : [ "<wangle/client/persistence/LRUPersistentCache-inl.h>", private, "<wangle/client/persistence/LRUPersistentCache.h>", public ]},
+	{ include : [ "<wangle/client/ssl/SSLSessionPersistentCache-inl.h>", private, "<wangle/client/ssl/SSLSessionPersistentCache.h>", public ]},
+]

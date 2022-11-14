@@ -1,0 +1,19 @@
+# Default include mappings for IWYU with GCC
+[
+  { ref: ./gcc.libc.imp },
+  { ref: ./gcc.stl.headers.imp },
+  { ref: ./gcc.symbols.imp },
+  { ref: ./stl.c.headers.imp },
+  { ref: ./libstdc++.imp },
+  { ref: ./boost.imp },
+  { ref: ./libcxx.manual.imp },
+  { ref: ./com_github_facebook_fatal.imp },
+  { ref: ./com_github_facebook_folly.imp },
+  { ref: ./com_github_facebook_wangle.imp },
+  { ref: ./com_github_facebook_fbthrift.imp },
+  { ref: ./com_github_facebook_proxygen.imp },
+  { ref: ./com_github_oneapi_src_onetbb_include.imp },
+  { ref: ./com_google_protobuf_src.imp },
+  { ref: ./tbb.imp },
+  { ref: ./wildcard.imp },
+]

@@ -1,0 +1,12 @@
+[
+	{include : [ "@<cpr/.*>", private, "<cpr/cpr.h>", public ]},
+	{include : [ "@<gtest/.*>", private, "<gtest/gtest.h>", public ]},
+	{include : [ "@<gmock/.*>", private, "<gmock/gmock.h>", public ]},
+	{include : [ "@<json/.*>", private, "<json/json.h>", public ]},
+	{include : [ "@<msgpack/.*>", private, "<msgpack.hpp>", public ]},
+	{include : [ "@<nlohmann/.*>", private, "<nlohmann/json.hpp>", public ]},
+	{include : [ "@<spdlog/.*>", private, "<spdlog/spdlog.h>", public ]},
+	{include : [ "@<taskflow/.*>", private, "<taskflow/taskflow.hpp>", public ]},
+	{include : [ "@<catch2/.*>", private, "<catch2/catch.hpp>", public ]},
+	{include : [ "@<boost/hana/.*>", private, "<boost/hana.hpp>", public ]},
+]
