@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 
-#include <catch2/catch_test_macros.hpp>
 #include <folly/Benchmark.h>
 
 #include <chrono>
@@ -35,4 +34,7 @@ BENCHMARK_RELATIVE(insertBackVector, n) {
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
-TEST_CASE("simple test", "[Benchmark]") { folly::runBenchmarks(); }
+int main(int argc, char const *argv[]) {
+  folly::runBenchmarks();
+  return 0;
+}

@@ -23,5 +23,7 @@ cc_binary(
     srcs = ["main.cc"],
     copts = TEST_CPP_COPTS,
     linkopts = TEST_LINKOPTS,
-    deps = ["@com_github_catchorg_catch2//:catch2_main"],
+    deps = [
+        "@com_github_facebook_folly//:folly",
+    ],
 )
